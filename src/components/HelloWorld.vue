@@ -1,25 +1,39 @@
 <template>
   <div class="hello">
     <el-row>
-      <el-button>默认按钮</el-button>
       <el-button type="primary" @click="gotoAbout">关于我们</el-button>
-      <el-button type="success">成功按钮</el-button>
-      <el-button type="info">信息按钮</el-button>
-      <el-button type="warning">警告按钮</el-button>
-      <el-button type="danger">危险按钮</el-button>
+    </el-row>
+
+    <el-row>
+      <h1>次按钮已被点击 {{ num }} 次</h1>
+    </el-row>
+
+    <el-row>
+      <el-button type="primary" icon="el-icon-edit">用户管理</el-button>
     </el-row>
   </div>
 </template>
 
 <script>
+import Axios from 'axios'
+
 export default {
   name: 'HelloWorld',
   props: {
     msg: String
   },
+  data() {
+    return {
+      num:  0,
+    }
+  },
   methods: {
     gotoAbout() {
-      this.$router.push("/about")
+      // this.$router.push("/about")
+      const result = Axios.get('/mcs/hello').then((res) => {
+        this.num = res.data
+      })
+      console.log(result)
     }
   }
 }
